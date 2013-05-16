@@ -1,15 +1,28 @@
 # Gradle dotnet plugins
 
-[Gradle](http://www.gradle.org/) plugins for building, testing and publishing .NET, Mono and [Unity](http://unity3d.com/) applications.
+[Gradle](http://www.gradle.org/) plugins for building, testing and publishing .NET, Mono and [Unity](http://unity3d.com/) components and applications.
+
+## Status
+
+The plugins can already build, test, publish and manage dependencies of C#, [Boo](http://boo.codehaus.org/) and [UnityScript](http://github.com/bamboo/unityscript) components
+using the Mono runtime shipped with Unity. There's also good support for consuming [NuGet](http://nuget.org/) packages as [ivy](http://ant.apache.org/ivy) modules.
+
+Next on the roadmap is support for using MS.NET on Windows and system Mono everywhere to ditch the Unity requirement for common usage.
+
+Would you like to help? Join the [mailing list](https://groups.google.com/forum/?fromgroups=#!forum/gradle-dotnet-plugins).
+
+## Requirements
+
+1. Java
+2. Unity 4.2 (the free version will do)
 
 ## Rationale
 
-Breaking system functionality into smaller units
-that can be evolved and deployed independently of each other makes integration simpler
+Breaking system functionality into smaller units that can be evolved and deployed independently of each other makes integration simpler
 because it can happen in small and localized steps. Divide and conquer.
 
 
-## In The Abstract
+## The Anatomy of a Modular Application
 
 User visible functionality is grouped and delivered as coarse grained units called *bundles*. 
 
