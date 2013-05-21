@@ -1,5 +1,6 @@
 package kaizen.plugins.nunit
 
+import kaizen.plugins.assembly.AssemblyPlugin
 import org.gradle.api.Plugin
 import org.gradle.api.Project
 import org.gradle.api.artifacts.Configuration
@@ -12,10 +13,16 @@ class NUnitAssemblyPlugin implements Plugin<Project> {
 
 	@Override
 	void apply(Project project) {
+		// NUnitAssembly implies assembly
+		project.plugins.apply AssemblyPlugin
+
+		// NUnitAssembly implies NUnit at the root
+		def bundle = project.rootProject
+		bundle.plugins.apply NUnitPlugin
+
 		def masterTestTask = project.task('test') {
 			description 'Runs all nunit tests.'
 		}
-		def bundle = project.rootProject
 		bundle.afterEvaluate {
 			configureNUnitTasksOn project, masterTestTask
 		}
@@ -26,6 +33,8 @@ class NUnitAssemblyPlugin implements Plugin<Project> {
 		def rootProject = project.rootProject
 		def nunit = NUnitExtension.forProject(rootProject)
 		def nunitVersion = nunit.version
+
+		project.logger.info "Configuring nunit $nunitVersion on $project"
 
 		def configureTaskForConfig = { Configuration config ->
 			def configLabel = Configurations.labelFor(config)
