@@ -2,6 +2,7 @@ package kaizen.plugins.vs
 
 import kaizen.plugins.assembly.model.AssemblyReference
 import kaizen.plugins.clr.ClrLanguageNames
+import kaizen.plugins.conventions.ProjectDependenciesClassifier
 import org.gradle.api.Project
 import org.gradle.api.artifacts.Dependency
 import org.gradle.api.artifacts.ProjectDependency
@@ -11,9 +12,15 @@ import kaizen.plugins.assembly.model.Assembly
 class VSProject {
 	final Project project
 	@Lazy String guid = GuidString.from(project.name)
+	final ProjectDependenciesClassifier dependenciesClassifier
 
 	VSProject(Project project) {
 		this.project = project
+		this.dependenciesClassifier = new ProjectDependenciesClassifier(project, { ProjectDependency d -> isSupportProject(d.dependencyProject) })
+	}
+
+	def isSupportProject(Project dependencyProject) {
+		VSExtension.forProject(dependencyProject)?.project.isSupportedLanguage
 	}
 
 	String getTargetFrameworkVersion() {
@@ -55,7 +62,7 @@ class VSProject {
 	}
 
 	Iterable<Dependency> getExternalDependencies() {
-		dependencies().findAll { !isProjectDependency(it) }
+		dependenciesClassifier.externalDependencies
 	}
 
 	Iterable<AssemblyReference> getAssemblyReferences() {
@@ -71,18 +78,7 @@ class VSProject {
 	}
 
 	private getProjectDependencies() {
-		dependencies().findAll { isProjectDependency(it) }
-	}
-
-	private boolean isProjectDependency(Dependency d) {
-		if (d instanceof ProjectDependency)
-			VSExtension.forProject(d.dependencyProject)?.project.isSupportedLanguage
-		else
-			false
-	}
-
-	private dependencies() {
-		project.configurations.getByName('default').allDependencies
+		dependenciesClassifier.projectDependencies
 	}
 
 	VSProjectReference projectReferenceFor(ProjectDependency projectDependency) {
