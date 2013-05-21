@@ -1,3 +1,5 @@
 def pluginsDir = file('plugins')
 pluginsDir.eachDir { include it.name }
+
+rootProject.name = 'bundle'
 rootProject.children.each { it.projectDir = new File(pluginsDir, it.name) }

@@ -4,7 +4,7 @@ allprojects {
 	apply plugin: 'idea'
 	apply plugin: 'base'
 
-	group = 'kaizen'
+	group = 'gradle-dotnet-plugins'
 
 	uploadArchives {
 		repositories {
@@ -37,34 +37,8 @@ subprojects {
 }
 
 dependencies {
-	subprojects.findAll { it.name != 'testing' }.each {
-		'default' project(path: it.path)
-	}
+	'default' subprojects.findAll { it.name != 'testing' }.collect { project(it.path) }
 }
 
 task publish(dependsOn: uploadArchives)
-
-task unityPackage <<{
-
-	def unityExecutable = project.hasProperty('unityExecutable') ?
-		project.property('unityExecutable') :
-		'/Applications/Unity/Unity.app/Contents/MacOS/Unity'
-
-	def logFile = file("$buildDir/unityPackage.log")
-	logFile.parentFile.mkdirs()
-
-	project.exec {
-		commandLine unityExecutable
-		args '-batchMode'
-		args '-quit'
-		args '-projectPath'
-		args file('templates/kaizen.unityPackage')
-		args '-exportPackage'
-		args 'Assets/kaizen'
-		args file("$buildDir/kaizen.unityPackage")
-		args '-cleanedLogFile'
-		args logFile
-	}
-	println logFile.text
-}
 
