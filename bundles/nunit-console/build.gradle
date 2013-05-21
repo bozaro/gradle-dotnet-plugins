@@ -28,7 +28,7 @@ task extractLatest(type: Copy, dependsOn: downloadLatest) {
 	include "NUnit-*/bin/**"
 }
 
-task captureVersion <<{
+task captureVersion(dependsOn: extractLatest) <<{
 	project.version = captureNUnitVersionOf("$nunitBinDir/nunit-console.exe")
 	subprojects { subProject ->
 		subProject.version = parent.version
@@ -48,7 +48,7 @@ def captureNUnitVersionOf(executable) {
 }
 
 def isWindows() {
-  org.gradle.internal.os.OperatingSystem.current().windows
+	org.gradle.internal.os.OperatingSystem.current().windows
 }
 
 allprojects {
@@ -65,12 +65,13 @@ allprojects {
 	}
 
 	uploadDefault {
+		dependsOn captureVersion
 		repositories {
 			ivy { url repositoryForPublishing }
 		}
 	}
 
-	task publish(dependsOn: [extractLatest, captureVersion, uploadDefault])
+	task publish(dependsOn: uploadDefault)
 
 	artifacts {
 		'default' zip
