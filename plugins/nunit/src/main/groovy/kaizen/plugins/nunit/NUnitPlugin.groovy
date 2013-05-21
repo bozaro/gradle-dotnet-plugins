@@ -1,5 +1,6 @@
 package kaizen.plugins.nunit
 
+import kaizen.plugins.LibClientPlugin
 import org.gradle.api.Plugin
 import org.gradle.api.Project
 import org.gradle.util.ConfigureUtil
@@ -11,6 +12,9 @@ class NUnitPlugin implements Plugin<Project> {
 
 		if (project != project.rootProject)
 			throw new IllegalArgumentException("NUnit plugin must be applied to root project only.")
+
+		// lib client is required to download NUnit dependencies
+		project.plugins.apply LibClientPlugin
 
 		def nunit = new NUnitExtension(project)
 		project.extensions.add('nunit', nunit)
