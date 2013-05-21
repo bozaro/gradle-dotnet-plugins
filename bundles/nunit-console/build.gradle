@@ -36,7 +36,7 @@ task captureVersion <<{
 }
 
 def captureNUnitVersionOf(executable) {
-	def process = "mono $executable".execute()
+	def process = (isWindows() ? executable : "mono $executable").execute()
 	process.waitFor()
 	def output = process.inputStream.text
 
@@ -45,6 +45,10 @@ def captureNUnitVersionOf(executable) {
 	def matches = logoPattern.matcher(output).collect { it[1] }
 	assert matches.size() > 0, "Failed to capture NUnit version"
 	matches.first()
+}
+
+def isWindows() {
+  org.gradle.internal.os.OperatingSystem.current().windows
 }
 
 allprojects {
