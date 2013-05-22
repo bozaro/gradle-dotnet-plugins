@@ -87,6 +87,7 @@ class AssemblyPlugin implements Plugin<Project> {
 					references assembly.references*.name
 					targetFrameworkVersion assembly.targetFrameworkVersion
 					embeddedResources embeddedResourcesFor(assembly)
+					keyFile assembly.keyFile
 				}
 			}
 

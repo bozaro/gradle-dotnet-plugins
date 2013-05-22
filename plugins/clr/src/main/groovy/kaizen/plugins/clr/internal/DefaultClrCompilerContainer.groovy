@@ -25,7 +25,12 @@ class DefaultClrCompilerContainer implements ClrCompilerContainer {
 	}
 
 	@Override
-	ClrCompiler compilerForLanguage(String language) {
+	ClrCompiler forLanguage(String language) {
 		compilerPerLanguage.get(language)
+	}
+
+	@Override
+	Iterator<ClrCompiler> iterator() {
+		compilerPerLanguage.values()
 	}
 }

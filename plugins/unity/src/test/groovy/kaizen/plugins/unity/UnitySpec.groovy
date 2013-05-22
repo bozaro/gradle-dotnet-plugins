@@ -1,7 +1,6 @@
 package kaizen.plugins.unity
 
 import kaizen.commons.Paths
-import kaizen.plugins.unity.internal.MonoFramework
 import kaizen.testing.OperatingSystemSensitiveSpecification
 import spock.lang.Unroll
 
@@ -56,7 +55,7 @@ class UnitySpec extends OperatingSystemSensitiveSpecification {
 		def clr = unity.runtimeForFrameworkVersion(targetFramework)
 
 		then:
-		(clr as MonoFramework).cli == Paths.combine(unityLocation, cli)
+		clr.cli == Paths.combine(unityLocation, cli)
 
 		where:
 		operatingSystem | targetFramework | cli

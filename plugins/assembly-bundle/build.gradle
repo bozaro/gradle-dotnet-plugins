@@ -1,7 +1,0 @@
-version = '0.1.0'
-
-dependencies {
-	[':assembly', ':unity', ':local-repository', ':lib-consumer'].each {
-		compile project(it)
-	}
-}

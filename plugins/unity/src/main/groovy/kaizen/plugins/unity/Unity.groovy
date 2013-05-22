@@ -1,12 +1,16 @@
 package kaizen.plugins.unity
 
 import kaizen.commons.Paths
-import kaizen.plugins.unity.internal.LegacyMonoFramework
-import kaizen.plugins.unity.internal.BleedingEdgeMonoFramework
+import kaizen.plugins.mono.DefaultMonoProvider
+import kaizen.plugins.mono.MonoPrefixProvider
 import org.gradle.api.Project
 import org.gradle.internal.os.OperatingSystem
+import kaizen.plugins.mono.MonoProvider
+import kaizen.plugins.mono.ExecHandler
+import kaizen.plugins.mono.Mono
+import kaizen.plugins.mono.frameworks.LegacyMono
 
-class Unity implements MonoProvider {
+class Unity implements MonoProvider, MonoPrefixProvider {
 
 	static Unity forProject(Project project) {
 		project.extensions.findByType(Unity)
@@ -20,10 +24,13 @@ class Unity implements MonoProvider {
 
 	final ExecHandler execHandler
 
+	private final DefaultMonoProvider monoProvider
+
 	Unity(UnityLocator locator, OperatingSystem operatingSystem, ExecHandler execHandler) {
 		this.locator = locator
 		this.operatingSystem = operatingSystem
 		this.execHandler = execHandler
+		this.monoProvider = new DefaultMonoProvider(this, operatingSystem, execHandler)
 	}
 
 	def getExecutable() {
@@ -49,25 +56,17 @@ class Unity implements MonoProvider {
 	 */
 	@Override
 	Mono runtimeForFrameworkVersion(String frameworkVersion) {
-		if (frameworkVersion == 'v3.5')
-			return mono35
-		if (frameworkVersion == 'v4.0')
-			return mono4
 		if (frameworkVersion == 'unity')
 			return monoUnity
-		throw new IllegalArgumentException("$frameworkVersion not supported")
+		return monoProvider.runtimeForFrameworkVersion(frameworkVersion)
 	}
 
-	Mono getMono35() {
-		new BleedingEdgeMonoFramework(operatingSystem, getFrameworkPath('MonoBleedingEdge'), execHandler, 'v2.0.50727')
-	}
-
-	Mono getMono4() {
-		new BleedingEdgeMonoFramework(operatingSystem, getFrameworkPath('MonoBleedingEdge'), execHandler, 'v4.0')
+	String getMonoPrefix() {
+		getFrameworkPath('MonoBleedingEdge')
 	}
 
 	Mono getMonoUnity() {
-		new LegacyMonoFramework(operatingSystem, getFrameworkPath('Mono'), execHandler)
+		new LegacyMono(operatingSystem, getFrameworkPath('Mono'), execHandler)
 	}
 
 	String getFrameworkPath(String frameworkName) {

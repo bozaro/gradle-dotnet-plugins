@@ -26,6 +26,6 @@ class ClrExtension implements ClrProvider {
 	}
 
 	ClrCompiler compilerForLanguage(String language) {
-		compilers.compilerForLanguage(language)
+		compilers.forLanguage(language)
 	}
 }

@@ -1,5 +1,9 @@
-version = '0.1.4'
+version = '0.1.0'
 
 dependencies {
-  compile project(':clr'), project(':lib-consumer')
+  compile project(':mono'),
+		project(':clr'),
+		project(':lib-consumer'),
+		project(':local-repository'),
+		project(':assembly')
 }

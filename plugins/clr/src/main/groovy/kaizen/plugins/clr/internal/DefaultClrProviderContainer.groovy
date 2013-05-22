@@ -32,4 +32,9 @@ class DefaultClrProviderContainer implements ClrProviderContainer {
 		}
 		return null
 	}
+
+	@Override
+	Iterator<ClrProvider> iterator() {
+		providers.iterator()
+	}
 }

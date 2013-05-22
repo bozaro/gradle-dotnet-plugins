@@ -2,14 +2,14 @@ package kaizen.plugins.unity
 
 import kaizen.plugins.clr.ClrExtension
 import kaizen.plugins.clr.ClrPlugin
-import kaizen.plugins.unity.internal.Booc
 import kaizen.plugins.unity.internal.DefaultUnityLocator
-import kaizen.plugins.unity.internal.ProjectExecHandler
 import kaizen.plugins.unity.internal.ProjectPropertyUnityLocator
-import kaizen.plugins.unity.internal.Mcs
 import org.gradle.api.Project
 import org.gradle.api.Plugin
 import org.gradle.internal.os.OperatingSystem
+import kaizen.plugins.mono.ProjectExecHandler
+import kaizen.plugins.mono.compilers.Mcs
+import kaizen.plugins.mono.compilers.BooCompiler
 
 class UnityPlugin implements Plugin<Project> {
 	@Override
@@ -24,6 +24,6 @@ class UnityPlugin implements Plugin<Project> {
 		def clr = ClrExtension.forProject(project)
 		clr.providers.add(unity)
 		clr.compilers.add(new Mcs(unity))
-		clr.compilers.add(new Booc(unity))
+		clr.compilers.add(new BooCompiler(unity))
 	}
 }
