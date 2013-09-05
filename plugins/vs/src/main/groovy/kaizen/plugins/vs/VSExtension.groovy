@@ -2,6 +2,7 @@ package kaizen.plugins.vs
 
 import org.gradle.api.NamedDomainObjectContainer
 import org.gradle.api.Project
+import org.gradle.util.ConfigureUtil
 
 class VSExtension {
 
@@ -22,6 +23,10 @@ class VSExtension {
 			solution.destinationFile = gradleProject.file("${it}.sln")
 			solution
 		}
+	}
+
+	def project(Closure configuration) {
+		ConfigureUtil.configure(configuration, this.project)
 	}
 
 	def getSolutions() {

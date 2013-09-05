@@ -13,6 +13,7 @@ class VSProject {
 	final Project project
 	@Lazy String guid = GuidString.from(project.name)
 	final ProjectDependenciesClassifier dependenciesClassifier
+	List<String> defines = []
 
 	VSProject(Project project) {
 		this.project = project
@@ -34,6 +35,10 @@ class VSProject {
 	String getOutputType() {
 		def target = assembly.target
 		target == 'winexe' ? 'WinExe' : target.capitalize()
+	}
+
+	String getDefineConstants() {
+		defines.empty ? '' : ';' + defines.join(';')
 	}
 
 	String getAssemblyName() {
