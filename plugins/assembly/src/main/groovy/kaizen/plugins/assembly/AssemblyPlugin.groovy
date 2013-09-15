@@ -101,6 +101,7 @@ class AssemblyPlugin implements Plugin<Project> {
 					appendix = config.name
 					from outputDir
 					include assembly.fileName
+					include "${assembly.fileName}.mdb"
 					include assembly.xmlDocFileName
 					destinationDir new File(outputDir(), 'distributions')
 				}
