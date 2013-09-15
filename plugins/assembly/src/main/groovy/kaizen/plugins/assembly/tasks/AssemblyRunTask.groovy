@@ -20,7 +20,9 @@ class AssemblyRunTask extends DefaultTask {
 	def run() {
 		def task = this
 		clr.exec {
-			executable project.file(task.assembly)
+			def assemblyFile = project.file(task.assembly)
+			executable assemblyFile
+			workingDir assemblyFile.parentFile
 		}
 	}
 
