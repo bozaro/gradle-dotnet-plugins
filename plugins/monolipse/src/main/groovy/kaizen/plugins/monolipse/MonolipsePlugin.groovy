@@ -17,7 +17,7 @@ class MonolipsePlugin implements Plugin<Project> {
 		eclipse.project.buildCommand('monolipse.core.booBuilder')
 
 		def assemblies = project.subprojects.findAll { Assembly.forProject(it) != null }
-		def tasks = assemblies.collect { it.tasks.add('monolipse', MonolipseTask) }
+		def tasks = assemblies.collect { it.tasks.create('monolipse', MonolipseTask) }
 
 		project.tasks.eclipse.dependsOn tasks.toArray()
 	}

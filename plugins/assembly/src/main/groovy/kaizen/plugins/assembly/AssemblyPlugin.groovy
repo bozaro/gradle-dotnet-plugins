@@ -38,9 +38,9 @@ class AssemblyPlugin implements Plugin<Project> {
 		def copyDependenciesTaskName = "copy${configLabel}Dependencies"
 
 		def compileTaskName = "compile${configLabel}"
-		def compileTask = project.tasks.add(compileTaskName, AssemblyCompile)
+		def compileTask = project.tasks.create(compileTaskName, AssemblyCompile)
 
-		def runTask = project.tasks.add("run$configLabel", AssemblyRunTask)
+		def runTask = project.tasks.create("run$configLabel", AssemblyRunTask)
 		runTask.runAssemblyBuiltBy(compileTask)
 
 		def assembleTaskName = "assemble${configLabel}"

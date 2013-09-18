@@ -11,13 +11,13 @@ class LibClientPlugin implements Plugin<Project> {
 	@Override
 	void apply(Project project) {
 
-		def updateAllTask = project.tasks.add('update') {
+		def updateAllTask = project.tasks.create('update') {
 			description 'Downloads and unpacks all dependencies.'
 		}
 
 		def createUpdateTaskForConfig = { config ->
 			def configName = config.name.capitalize()
-			UpdateTask updateTask = project.tasks.add(name: "update$configName", type: UpdateTask) {
+			UpdateTask updateTask = project.tasks.create(name: "update$configName", type: UpdateTask) {
 				description "Downloads and unpacks all $configName dependencies."
 			}
 			updateTask.configuration = config
