@@ -14,6 +14,7 @@ class VSProject {
 	@Lazy String guid = GuidString.from(project.name)
 	final ProjectDependenciesClassifier dependenciesClassifier
 	List<String> defines = []
+	String keyFile
 
 	VSProject(Project project) {
 		this.project = project

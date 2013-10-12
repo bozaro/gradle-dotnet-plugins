@@ -29,7 +29,15 @@
     <DefineConstants>TRACE${project.defineConstants}</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+  </PropertyGroup><%
+  if (project.keyFile) { %>
+  <PropertyGroup>
+  	<SignAssembly>true</SignAssembly>
   </PropertyGroup>
+  <PropertyGroup>
+  	<AssemblyOriginatorKeyFile>$project.keyFile</AssemblyOriginatorKeyFile>
+  </PropertyGroup>
+  <% } %>
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Core" />
