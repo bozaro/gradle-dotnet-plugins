@@ -1,4 +1,4 @@
-# Gradle dotnet plugins
+# Gradle dotnet plugins [![Build Status](https://travis-ci.org/bamboo/gradle-dotnet-plugins.png)](https://travis-ci.org/bamboo/gradle-dotnet-plugins)
 
 [Gradle](http://www.gradle.org/) plugins for building, testing and publishing .NET, Mono and [Unity](http://unity3d.com/) components and applications.
 
