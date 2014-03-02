@@ -36,7 +36,7 @@ class Assembly {
 	}
 
 	Iterable<File> getSourceFiles() {
-		project.fileTree(dir: project.projectDir, include: "**/*.$sourceFileExtension")
+		project.fileTree(dir: project.projectDir, include: "**/*.$sourceFileExtension", exclude: ".#*")
 	}
 
 	Iterable<File> getEmbeddedResources() {
