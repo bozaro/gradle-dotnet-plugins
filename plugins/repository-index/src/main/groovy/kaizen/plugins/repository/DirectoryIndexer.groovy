@@ -16,7 +16,7 @@ class DirectoryIndexer {
 					h1('Directory listing')
 					hr()
 					pre {
-						dir.eachFile {
+						dir.listFiles().sort({ f1, f2 -> f1.name.compareTo(f2.name) }).each {
 							if (!shouldBeHidden(it))
 								a(href: it.name, it.name)
 						}
