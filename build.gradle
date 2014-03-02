@@ -1,3 +1,5 @@
+defaultTasks 'test'
+
 version = '0.1.0'
 
 allprojects {
@@ -41,4 +43,3 @@ dependencies {
 }
 
 task publish(dependsOn: uploadArchives)
-
