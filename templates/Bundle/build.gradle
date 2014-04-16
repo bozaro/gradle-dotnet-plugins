@@ -62,6 +62,7 @@ subprojects { subProject ->
 		dependencies {
 			// Foo.Bar.Tests depends on Foo.Bar
 			'default' project(subProject.path[0..-('.Tests'.length() + 1)])
+			'default' "nunit:nunit.framework:${nunit.version}"
 		}
 		bundleDependencies.add('tests', bundleDependencies.project(path: subProject.path))
 		break
@@ -80,11 +81,3 @@ task publish {
 nunit {
 	version = '2.6+'
 }
-
-ext {
-		references = [
-			'nunitFramework': "nunit:nunit.framework:${nunit.version}",
-			'moq': 'Moq:Moq:4.0+',
-		]
-}
-
