@@ -40,10 +40,16 @@ class Mcs implements ClrCompiler {
 
 	String getMcsPath() {
 		if (operationSystem.linux) {
-			return "/usr/lib/mono/4.5/mcs.exe"
-		} else {
-			return runtimeForFrameworkVersion('v3.5').lib('2.0', 'mcs.exe')
+			for (path in [
+					"/usr/lib/mono/2.0/mcs.exe",	// Ubuntu 12.04
+					"/usr/lib/mono/4.5/mcs.exe"		// Ubuntu 14.04
+			]) {
+				if (new File(path).exists()) {
+					return path
+				}
+			}
 		}
+		return runtimeForFrameworkVersion('v3.5').lib('2.0', 'mcs.exe')
 	}
 
 	private runtimeForFrameworkVersion(String framework) {
