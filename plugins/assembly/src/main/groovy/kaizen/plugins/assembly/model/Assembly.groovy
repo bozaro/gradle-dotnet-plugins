@@ -3,7 +3,6 @@ package kaizen.plugins.assembly.model
 import kaizen.plugins.clr.ClrLanguageNames
 import org.gradle.api.DomainObjectSet
 import org.gradle.api.Project
-import org.gradle.api.file.FileCollection
 import org.gradle.api.internal.DefaultDomainObjectSet
 import org.gradle.util.ConfigureUtil
 
@@ -42,7 +41,7 @@ class Assembly {
 		project.projectDir.listFiles({ dir, name -> name.endsWith('.boo') } as FilenameFilter).any() ? 'boo' : ClrLanguageNames.CSHARP
 	}
 
-	FileCollection getSourceFiles() {
+	Iterable<File> getSourceFiles() {
         sourceFiles()
 	}
 
