@@ -128,8 +128,8 @@ class AssemblyPlugin implements Plugin<Project> {
 	}
 
 	def resourceIdFor(File file, Assembly assembly) {
-		def relativeResourceId = assembly.project.relativePath(file).replace('\\', '/').replace('/', '.')
-		"${assembly.name}.$relativeResourceId"
+		def name = assembly.getEmbeddedResourceName(file)
+		return (name == null) ? "${assembly.name}.${file.name}" : name
 	}
 
 	def assemblyReferencesFor(Configuration config, File outputDir) {
@@ -144,8 +144,8 @@ class AssemblyPlugin implements Plugin<Project> {
 
 	def assemblyProjectFileNameFor(Dependency dependency) {
 		dependency instanceof ProjectDependency ?
-			Assembly.forProject(dependency.dependencyProject)?.fileName :
-			null
+				Assembly.forProject(dependency.dependencyProject)?.fileName :
+				null
 	}
 
 	def configure(Object object, Closure closure) {

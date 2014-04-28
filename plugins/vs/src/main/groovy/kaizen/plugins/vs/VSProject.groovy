@@ -1,5 +1,6 @@
 package kaizen.plugins.vs
 
+import kaizen.plugins.assembly.model.Assembly
 import kaizen.plugins.assembly.model.AssemblyReference
 import kaizen.plugins.clr.ClrLanguageNames
 import kaizen.plugins.conventions.ProjectDependenciesClassifier
@@ -7,11 +8,10 @@ import org.gradle.api.Project
 import org.gradle.api.artifacts.Dependency
 import org.gradle.api.artifacts.ProjectDependency
 
-import kaizen.plugins.assembly.model.Assembly
-
 class VSProject {
 	final Project project
-	@Lazy String guid = GuidString.from(project.name)
+	@Lazy
+	String guid = GuidString.from(project.name)
 	final ProjectDependenciesClassifier dependenciesClassifier
 	List<String> defines = []
 	String keyFile
@@ -57,9 +57,10 @@ class VSProject {
 		project.relativePath(file).replace('/', '\\')
 	}
 
-	Iterable<String> getEmbeddedResources() {
-		assembly.embeddedResources.collect {
-			vsPathFor(it)
+	Map<String, String> getEmbeddedResources() {
+		assembly.embeddedResources.inject([:]) { result, entry ->
+			result[vsPathFor(entry)] = assembly.getEmbeddedResourceName(entry)
+			return result
 		}
 	}
 

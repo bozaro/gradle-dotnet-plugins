@@ -19,12 +19,15 @@ class Assembly {
 	String language
 	final DomainObjectSet<AssemblyReference> references
 	String targetFrameworkVersion = 'v3.5'
-    def embeddedResources = {
-        project.fileTree(dir: project.file('resources'), include: "**/*")
-    }
-    def sourceFiles = {
-        project.fileTree(dir: project.projectDir, include: "**/*.$sourceFileExtension", exclude: ".#*")
-    }
+	def embeddedResources = {
+		project.fileTree(dir: project.file('resources'), include: "**/*")
+	}
+	def embeddedResourceName = { File file ->
+		return null
+	}
+	def sourceFiles = {
+		project.fileTree(dir: project.projectDir, include: "**/*.$sourceFileExtension", exclude: ".#*")
+	}
 
 	Assembly(Project project) {
 		this.project = project
@@ -42,7 +45,11 @@ class Assembly {
 	}
 
 	Iterable<File> getSourceFiles() {
-        sourceFiles()
+		sourceFiles()
+	}
+
+	String getEmbeddedResourceName(File file) {
+		embeddedResourceName(file)
 	}
 
 	Iterable<File> getEmbeddedResources() {

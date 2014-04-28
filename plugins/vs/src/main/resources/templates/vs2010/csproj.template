@@ -61,9 +61,15 @@
   </ItemGroup>
   <ItemGroup>
 		<%
-			project.embeddedResources.each {
-		%><EmbeddedResource Include="$it" />
-		<% } %>
+			project.embeddedResources.each { resourcePath, logicalName ->
+			    if (logicalName != null) {
+		%><EmbeddedResource Include="$resourcePath">
+		    <LogicalName>$logicalName</LogicalName>
+		</EmbeddedResource>
+		<%      } else {
+		%><EmbeddedResource Include="$resourcePath" />
+		<%      }
+		    } %>
 	</ItemGroup>
   <ItemGroup>
   	<%
