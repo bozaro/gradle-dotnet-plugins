@@ -42,6 +42,7 @@ abstract class AbstractMono implements Clr, Mono {
 			execSpec.args '--debug'
 			execSpec.args executable
 			execSpec.args arguments
+			execSpec.setIgnoreExitValue(clrExecSpec.isIgnoreExitValue())
 		}
 	}
 
