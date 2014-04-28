@@ -4,6 +4,7 @@ build
 out
 libs
 .gradle
+.idea
 *.iml
 *.ipr
 *.iws
