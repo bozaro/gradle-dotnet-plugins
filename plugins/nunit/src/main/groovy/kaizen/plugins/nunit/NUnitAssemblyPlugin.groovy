@@ -44,6 +44,7 @@ class NUnitAssemblyPlugin implements Plugin<Project> {
 				configure(project) {
 					def outputAssembly = project.file(compileTask.outputAssembly)
 					def testConfigTask = task("test$configLabel", type: NUnitTask, dependsOn: [compileTask, rootProject.tasks.updateNUnit]) {
+						ignoreFailures nunit.ignoreFailures
 						inputs.file outputAssembly
 						outputs.file new File(outputAssembly.parentFile, 'TestResult.xml')
 						targetFrameworkVersion compileTask.targetFrameworkVersion

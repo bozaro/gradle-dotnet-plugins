@@ -13,6 +13,7 @@ class NUnitExtension {
 	private final Project project
 	public final NamedDomainObjectContainer<NUnitConfiguration> testConfigurations
 	public def version = '2.6.1.12217'
+	public boolean ignoreFailures = false
 
 	NUnitExtension(Project project) {
 		this.project = project
