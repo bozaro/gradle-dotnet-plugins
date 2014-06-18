@@ -34,7 +34,7 @@ class Mcs implements ClrCompiler {
 		def mcs = this.mcs
 		runtime.exec { ClrExecSpec execSpec ->
 			execSpec.executable mcs
-			execSpec.args builder.arguments
+			execSpec.args builder.wrappedArguments
 		}
 	}
 

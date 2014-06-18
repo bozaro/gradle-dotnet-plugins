@@ -5,6 +5,7 @@ public interface ClrCompileSpec {
 	void sourceFiles(Iterable<File> sourceFiles)
 	void outputAssembly(File outputAssembly)
 	void outputXmlDoc(File file)
+    void wrapArguments(boolean wrapArguments);
 	void defines(Iterable<String> defines)
 	void keyFile(File keyFile)
 	void compilerOptions(Iterable<String> compilerOptions)

@@ -49,6 +49,7 @@ class McsSpec extends Specification {
 			spec.embeddedResources embeddedResources
 			spec.defines defines
 			spec.compilerOptions compilerOptions
+			//spec.wrapArguments false
 		}
 
 		then:

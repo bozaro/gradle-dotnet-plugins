@@ -1,13 +1,18 @@
 package kaizen.plugins.mono.compilers
 
 import kaizen.plugins.clr.ClrCompileSpec
-import org.gradle.process.ExecSpec
+import org.slf4j.Logger
+import org.slf4j.LoggerFactory
 
-abstract class AbstractCompilerCommandLineBuilder implements ClrCompileSpec  {
+abstract class AbstractCompilerCommandLineBuilder implements ClrCompileSpec {
+	final Logger logger = LoggerFactory.getLogger(AbstractCompilerCommandLineBuilder.class)
 
 	final List<Object> arguments = []
 
 	String targetFramework
+
+	boolean wrapArguments = true
+
 
 	@Override
 	void targetFrameworkVersion(String targetFramework) {
@@ -63,5 +68,22 @@ abstract class AbstractCompilerCommandLineBuilder implements ClrCompileSpec  {
 
 	void args(Iterable args) {
 		arguments.addAll(args)
+	}
+
+	@Override
+	void wrapArguments(boolean wrapArguments) {
+		this.wrapArguments = wrapArguments;
+	}
+
+	List<Object> getWrappedArguments() {
+		if (wrapArguments) {
+			File tmp = File.createTempFile("tmp", ".arg")
+			tmp.deleteOnExit();
+			String args = arguments.join("\n")
+			logger.debug("Creating arguments file {} with content:\n{}", tmp.absolutePath, args)
+			tmp.write(args)
+			return ["@" + tmp.absolutePath];
+		}
+		return arguments
 	}
 }
